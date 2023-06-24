@@ -5,6 +5,9 @@
 ## Summary
 This repository is a project for École 42. It is a replica for [printf](https://en.wikipedia.org/wiki/Printf) function. 
 
+* Supports 'c', 's', 'p', 'd', 'i', 'u', 'x' and 'X' placeholders.
+* Accepts any number of arguments.
+
 ## Mandatory part
 
 ### General Information
