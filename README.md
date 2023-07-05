@@ -27,5 +27,5 @@ This repository is a project for École 42. It is a replica for [printf](https:/
 
 ## Compiling
 
-1. Clone the repository. The repository depends [42-libft](https://github.com/hamza-cskn/42-libft) library. You have to clone too. So use `git clone --recursive git@github.com:hamza-cskn/42-libft.git`
+1. Clone the repository. The repository depends [42-libft](https://github.com/hamza-cskn/42-libft) library. You have to clone too. So use `git clone --recursive git@github.com:hamza-cskn/42-ft_printf.git`
 2. Use `make all`command.
