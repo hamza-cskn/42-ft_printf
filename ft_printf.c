@@ -13,7 +13,7 @@
 #include "ft_printf.h"
 #include "libft/libft.h"
 
-char *safe_add_prefix(char *prefix, char *str)
+char	*prefix(char *prefix, char *str)
 {
 	char	*new_str;
 
@@ -40,7 +40,7 @@ int	print_format(char format_char, va_list arg)
 	else if (format_char == 'X')
 		str = to_upper(ft_uitoa_base(va_arg(arg, unsigned int), 16));
 	else if (format_char == 'p')
-		str = safe_add_prefix("0x", ft_uitoa_base(va_arg(arg, unsigned long long), 16));
+		str = prefix("0x", ft_uitoa_base(va_arg(arg, unsigned long long), 16));
 	else
 		return (ft_putchar(format_char));
 	len = ft_putstr(str);
