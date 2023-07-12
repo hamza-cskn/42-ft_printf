@@ -11,11 +11,14 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "libft/libft.h"
 
 char	*to_upper(char *str)
 {
 	int	i;
 
+	if (!str)
+		return (ft_strdup(""));
 	i = 0;
 	while (str[i])
 	{
@@ -36,6 +39,8 @@ int	ft_putstr(char *str)
 {
 	int	i;
 
+	if (!str)
+		return (ft_putstr("(null)"));
 	i = 0;
 	while (str[i])
 	{

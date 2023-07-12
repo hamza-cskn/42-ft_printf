@@ -1,9 +1,10 @@
 SOURCES	= ${wildcard *.c}
 OBJECTS	= ${SOURCES:.c=.o}
 LIBFT_OBJECTS = libft/*.o
+NAME = libftprintf.a
 
 %.o: %.c
-	gcc -Wall -Wextra -Werror -c $< -o $@ -I includes
+	gcc -Wall -Wextra -Werror -c $< -o $@
 
 libftprintf.a: ${OBJECTS} libft/libft.a
 	ar -rc libftprintf.a ${OBJECTS} ${LIBFT_OBJECTS}

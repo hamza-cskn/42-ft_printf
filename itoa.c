@@ -11,8 +11,9 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "libft/libft.h"
 
-static char	digit2char(long digit)
+static char	digit2char(unsigned long long int digit)
 {
 	if (digit < 10)
 		return ((char) digit + '0');
@@ -20,7 +21,7 @@ static char	digit2char(long digit)
 		return ((char) digit - 10 + 'a');
 }
 
-static int	digits(long n, int base)
+static int	digits(unsigned long long int n, unsigned long long int base)
 {
 	int	i;
 
@@ -35,31 +36,21 @@ static int	digits(long n, int base)
 	return (i);
 }
 
-static void	natural_itoa_base(long nb, int base, char *str)
-{
-	if (nb >= base)
-		natural_itoa_base(nb / base, base, str - 1);
-	*str = digit2char(nb % base);
-}
-
-char	*ft_itoa_base(long nb, int base)
+char	*ft_uitoa_base(unsigned long long nb, unsigned long long base)
 {
 	char	*result;
-	int		len;
-	int		is_negative;
 	int		digit_count;
 
-	is_negative = nb < 0;
-	if (is_negative)
-		nb = -nb;
 	digit_count = digits(nb, base);
-	len = digit_count + is_negative;
-	result = (char *) malloc(sizeof(char) * (len + 1));
+	result = (char *) malloc(sizeof(char) * (digit_count + 1));
 	if (!result)
 		return (NULL);
-	if (is_negative)
-		*result = '-';
-	natural_itoa_base(nb, base, result + len - 1);
-	result[len] = '\0';
+	result[digit_count] = '\0';
+	while (digit_count)
+	{
+		result[digit_count - 1] = digit2char(nb % base);
+		nb /= base;
+		digit_count--;
+	}
 	return (result);
 }

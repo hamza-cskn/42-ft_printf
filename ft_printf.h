@@ -26,6 +26,6 @@ int		ft_putchar(char c);
 
 int		ft_putstr(char *str);
 
-char	*ft_itoa_base(long nb, int base);
+char	*ft_uitoa_base(unsigned long long nb, unsigned long long base);
 
 #endif

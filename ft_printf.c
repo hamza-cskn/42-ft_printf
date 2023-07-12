@@ -11,33 +11,41 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "libft/libft.h"
+
+char *safe_add_prefix(char *prefix, char *str)
+{
+	char	*new_str;
+
+	new_str = ft_strjoin(prefix, str);
+	free(str);
+	return (new_str);
+}
 
 int	print_format(char format_char, va_list arg)
 {
 	char	*str;
+	int		len;
 
 	if (format_char == 'c')
 		return (ft_putchar(va_arg(arg, int)));
 	else if (format_char == 's')
 		return (ft_putstr(va_arg(arg, char *)));
 	else if (format_char == 'd' || format_char == 'i')
-		return (ft_putstr(ft_itoa_base(va_arg(arg, int), 10)));
+		str = ft_itoa(va_arg(arg, int));
 	else if (format_char == 'u')
-		return (ft_putstr(ft_itoa_base((unsigned int) va_arg(arg, int), 10)));
+		str = ft_uitoa_base(va_arg(arg, unsigned int), 10);
 	else if (format_char == 'x')
-		return (ft_putstr(ft_itoa_base((unsigned int) va_arg(arg, int), 16)));
+		str = (ft_uitoa_base(va_arg(arg, unsigned int), 16));
 	else if (format_char == 'X')
-	{
-		str = ft_itoa_base((unsigned int) va_arg(arg, int), 16);
-		return (ft_putstr(to_upper(str)));
-	}
+		str = to_upper(ft_uitoa_base(va_arg(arg, unsigned int), 16));
 	else if (format_char == 'p')
-	{
-		str = ft_itoa_base(va_arg(arg, unsigned long), 16);
-		return (ft_putstr("0x") + ft_putstr(str));
-	}
+		str = safe_add_prefix("0x", ft_uitoa_base(va_arg(arg, unsigned long long), 16));
 	else
 		return (ft_putchar(format_char));
+	len = ft_putstr(str);
+	free(str);
+	return (len);
 }
 
 int	ft_printf(const char *format, ...)
