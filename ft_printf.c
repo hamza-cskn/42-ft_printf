@@ -3,70 +3,82 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hcoskun42 <hcoskun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hcoskun <hcoskun@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 23:12:25 by hcoskun42         #+#    #+#             */
-/*   Updated: 2023/06/24 23:12:26 by hcoskun42        ###   ########.tr       */
+/*   Updated: 2023/07/15 19:14:00 by hcoskun          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "libft/libft.h"
 
-char	*prefix(char *prefix, char *str)
+int	print_pointer_format(unsigned long long nb)
 {
-	char	*new_str;
+	int	res;
 
-	new_str = ft_strjoin(prefix, str);
-	free(str);
-	return (new_str);
+	if (ft_putstr("0x") == -1)
+		return (-1);
+	res = ft_putunbr_base(nb, 16, 0);
+	if (res == -1)
+		return (-1);
+	return (res + 2);
+}
+
+unsigned int	get_uint(va_list arg)
+{
+	return ((unsigned int) va_arg(arg, unsigned int));
+}
+
+unsigned long long	get_ulonglong(va_list arg)
+{
+	return ((unsigned long long) va_arg(arg, unsigned long long));
 }
 
 int	print_format(char format_char, va_list arg)
 {
-	char	*str;
-	int		len;
-
 	if (format_char == 'c')
 		return (ft_putchar(va_arg(arg, int)));
 	else if (format_char == 's')
 		return (ft_putstr(va_arg(arg, char *)));
 	else if (format_char == 'd' || format_char == 'i')
-		str = ft_itoa(va_arg(arg, int));
+		return (ft_putnbr((int) va_arg(arg, int)));
 	else if (format_char == 'u')
-		str = ft_uitoa_base(va_arg(arg, unsigned int), 10);
+		return (ft_putunbr_base(get_uint(arg), 10, 0));
 	else if (format_char == 'x')
-		str = (ft_uitoa_base(va_arg(arg, unsigned int), 16));
+		return (ft_putunbr_base(get_uint(arg), 16, 0));
 	else if (format_char == 'X')
-		str = to_upper(ft_uitoa_base(va_arg(arg, unsigned int), 16));
+		return (ft_putunbr_base(get_uint(arg), 16, 1));
 	else if (format_char == 'p')
-		str = prefix("0x", ft_uitoa_base(va_arg(arg, unsigned long long), 16));
+		return (print_pointer_format(get_ulonglong(arg)));
 	else
 		return (ft_putchar(format_char));
-	len = ft_putstr(str);
-	free(str);
-	return (len);
 }
 
 int	ft_printf(const char *format, ...)
 {
-	int		i;
 	int		sum_len;
+	int		val;
 	va_list	arguments;
 
 	va_start (arguments, format);
-	i = 0;
 	sum_len = 0;
-	while (format[i])
+	while (*format)
 	{
-		if (format[i] == '%')
+		if (*format == '%')
 		{
-			i++;
-			sum_len += print_format(format[i], arguments);
+			val = print_format(*(++format), arguments);
+			if (val == -1)
+				return (-1);
+			sum_len += val;
 		}
 		else
-			sum_len += ft_putchar(format[i]);
-		i++;
+		{
+			if (ft_putchar(*format) == -1)
+				return (-1);
+			sum_len++;
+		}
+		format++;
 	}
 	va_end(arguments);
 	return (sum_len);

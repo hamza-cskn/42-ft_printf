@@ -3,54 +3,61 @@
 /*                                                        :::      ::::::::   */
 /*   itoa.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hcoskun42 <hcoskun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hcoskun <hcoskun@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 23:23:05 by hcoskun42         #+#    #+#             */
-/*   Updated: 2023/06/24 23:23:06 by hcoskun42        ###   ########.tr       */
+/*   Updated: 2023/07/15 19:07:22 by hcoskun          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "libft/libft.h"
 
-static char	digit2char(unsigned long long int digit)
+static char	digit2char(unsigned long long int digit, int upper)
 {
+	char	res;
+
 	if (digit < 10)
-		return ((char) digit + '0');
+		res = ((char) digit + '0');
 	else
-		return ((char) digit - 10 + 'a');
+		res = ((char) digit - 10 + 'a');
+	if (upper)
+		res = ft_toupper(res);
+	return res;
 }
 
-static int	digits(unsigned long long int n, unsigned long long int base)
+int		ft_putnbr(long long n)
 {
-	int	i;
+	int	val;
 
-	if (n == 0)
-		return (1);
-	i = 0;
-	while (n != 0)
+	if (n >= 0)
+		return ft_putunbr_base(n, 10, 0);
+	else
 	{
-		n /= base;
-		i++;
+		if (ft_putchar('-') == -1)
+			return (-1);
+		val = ft_putunbr_base(n * -1, 10, 0);
+		if (val == -1)
+			return (-1);
+		return (val + 1);
 	}
-	return (i);
 }
 
-char	*ft_uitoa_base(unsigned long long nb, unsigned long long base)
+int	ft_putunbr_base(unsigned long long n, unsigned long long base, int upper)
 {
-	char	*result;
-	int		digit_count;
+	int	result;
+	int	val;
 
-	digit_count = digits(nb, base);
-	result = (char *) malloc(sizeof(char) * (digit_count + 1));
-	if (!result)
-		return (NULL);
-	result[digit_count] = '\0';
-	while (digit_count)
+	result = 0;
+	if (n >= base)
 	{
-		result[digit_count - 1] = digit2char(nb % base);
-		nb /= base;
-		digit_count--;
+		val = ft_putunbr_base(n / base, base, upper);
+		if (val == -1)
+			return (-1);
+		result += val;
+		n = n % base;
 	}
-	return (result);
+	if (ft_putchar(digit2char(n, upper)) == -1)
+		return (-1);
+	return (result + 1);
 }

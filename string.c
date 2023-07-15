@@ -3,36 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   string.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hcoskun42 <hcoskun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hcoskun <hcoskun@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 23:24:42 by hcoskun42         #+#    #+#             */
-/*   Updated: 2023/06/24 23:24:43 by hcoskun42        ###   ########.tr       */
+/*   Updated: 2023/07/15 19:07:51 by hcoskun          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "libft/libft.h"
 
-char	*to_upper(char *str)
-{
-	int	i;
-
-	if (!str)
-		return (ft_strdup(""));
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] >= 'a' && str[i] <= 'z')
-			str[i] -= 32;
-		i++;
-	}
-	return (str);
-}
-
 int	ft_putchar(char c)
 {
-	write(1, &c, 1);
-	return (1);
+	return write(1, &c, 1);
 }
 
 int	ft_putstr(char *str)
@@ -40,11 +23,12 @@ int	ft_putstr(char *str)
 	int	i;
 
 	if (!str)
-		return (ft_putstr("(null)"));
+		return ft_putstr("(null)");
 	i = 0;
 	while (str[i])
 	{
-		ft_putchar(str[i]);
+		if (ft_putchar(str[i]) == -1)
+			return (-1);
 		i++;
 	}
 	return (i);
