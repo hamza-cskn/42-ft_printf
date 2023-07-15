@@ -6,7 +6,7 @@
 /*   By: hcoskun <hcoskun@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 23:23:05 by hcoskun42         #+#    #+#             */
-/*   Updated: 2023/07/15 19:07:22 by hcoskun          ###   ########.fr       */
+/*   Updated: 2023/07/15 19:16:23 by hcoskun          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ static char	digit2char(unsigned long long int digit, int upper)
 		res = ((char) digit - 10 + 'a');
 	if (upper)
 		res = ft_toupper(res);
-	return res;
+	return (res);
 }
 
-int		ft_putnbr(long long n)
+int	ft_putnbr(long long n)
 {
 	int	val;
 
 	if (n >= 0)
-		return ft_putunbr_base(n, 10, 0);
+		return (ft_putunbr_base(n, 10, 0));
 	else
 	{
 		if (ft_putchar('-') == -1)
