@@ -26,7 +26,7 @@ This repository is a project for École 42. It is a replica for [printf](https:/
 * It must not do the buffer management like the real printf
 * It will manage the following conversions: cspdiuxX%
 * It will be compared with the real printf
-* You must use the command ar to create your librairy, using the command libtool is forbidden.
+* You must use the command ar to create your librariy, using the command libtool is forbidden.
 
 ## Compiling
 
