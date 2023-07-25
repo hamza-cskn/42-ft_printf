@@ -1,4 +1,4 @@
-SOURCES	= ${wildcard *.c}
+SOURCES	= ft_printf.c itoa.c string.c
 OBJECTS	= ${SOURCES:.c=.o}
 LIBFT_OBJECTS = libft/*.o
 NAME = libftprintf.a
